@@ -2,6 +2,8 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.18.
 
+Project for course DH2624, building a web using open weather api with Angular framework.
+
 Init project with `npm install` , then start with `npm start` and visit `http://localhost:4200/` thereafter
 
 ## Basic contribution rule
