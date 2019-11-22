@@ -2,9 +2,11 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.18.
 
-## Development server
+Init project with `npm install` , then start with `npm start` and visit `http://localhost:4200/` thereafter
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Basic contribution rule
+
+Fork new branch , make change and make a pull request for reviewing before merging to master. 
 
 ## Code scaffolding
 
