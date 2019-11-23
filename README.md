@@ -10,6 +10,7 @@ Init project with `npm install` , then start with `npm start` and visit `http://
 
 Fork new branch , make change and make a pull request for reviewing before merging to master. 
 
+
 ## Code scaffolding
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
