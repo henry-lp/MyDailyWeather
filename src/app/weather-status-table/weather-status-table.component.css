@@ -1,0 +1,14 @@
+img {
+    width: 25px;
+    height: 23px;
+}
+
+.centering {
+    display: flex;
+    align-content: center;
+    align-items: center;
+}
+
+.bg-light-grey {
+    background-color: #D3D3D3;
+}

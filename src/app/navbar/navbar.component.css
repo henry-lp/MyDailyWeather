@@ -1,0 +1,56 @@
+nav {
+    background: linear-gradient(90deg, rgba(2, 175, 231, 1) 0%, rgba(2, 0, 36, 1) 0%, rgba(0, 212, 255, 1) 0%, rgba(9, 9, 121, 1) 100%);
+    z-index: 1000;
+}
+
+.navbar-brand {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 140%;
+}
+
+.custom-brand {
+    cursor: pointer;
+}
+
+.nav-item,
+.dropdown-btn {
+    font-size: 100%;
+    display: inline-block;
+    float: none;
+    vertical-align: top;
+    text-align: end;
+}
+
+.no-text-wrap {
+    overflow: hidden;
+    white-space: nowrap;
+    color: blue;
+}
+
+.no-text-wrap:hover {
+    color: white;
+}
+
+.nav-searchbar {
+    position: relative;
+}
+
+.spinner {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.mat-input {
+    border: none;
+    background-color: transparent;
+}
+
+.hide {
+    display: none;
+}
+
+a {
+    text-decoration: none;
+    text-decoration-color: white;
+}

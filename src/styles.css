@@ -1,1 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+
+body {
+    background: url('./assets/weather-background.jpg') no-repeat center center fixed;
+    margin: 0;
+    padding: 0;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

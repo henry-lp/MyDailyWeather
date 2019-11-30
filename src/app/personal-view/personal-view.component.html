@@ -1,0 +1,13 @@
+<app-navbar [showNavSearch]="true" [optionsProvider]="locationsProviderSub.asObservable()" (locationRemoveEvent)="onRemoveCityReq($event)"> </app-navbar>
+<!-- Display if no data or not logged in -->
+<div class="basic-display">
+    <h2>{{message}}</h2>
+</div>
+<div class="weather-status-table-frame">
+    <app-weather-status-table [weatherTableDataSetsObs]="weatherTableDataSetsSub.asObservable()"></app-weather-status-table>
+</div>
+<div class=" container">
+    <app-line-chart-template [class.hide]="!doneLoading" [graphTitle]="'Temperature (°C)'" [overViewGraphUpdateEvent]="overViewTempGraphEventSub.asObservable()" (removeCityReq)="onRemoveCityReq($event)" [overViewGraph]="true"></app-line-chart-template>
+    <app-line-chart-template [class.hide]="!doneLoading" [graphTitle]="'Pressure (Pa)'" [overViewGraphUpdateEvent]="overViewPressGraphEventSub.asObservable()" (removeCityReq)="onRemoveCityReq($event)" [overViewGraph]="true"></app-line-chart-template>
+    <app-line-chart-template [class.hide]="!doneLoading" [graphTitle]="'Humidity (%)'" [overViewGraphUpdateEvent]="overViewHumidGraphEventSub.asObservable()" (removeCityReq)="onRemoveCityReq($event)" [overViewGraph]="true"></app-line-chart-template>
+</div>
