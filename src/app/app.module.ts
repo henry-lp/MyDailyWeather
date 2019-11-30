@@ -35,6 +35,11 @@ const firebaseConfig = {
   measurementId: "G-23K96S52TN"
 }
 
+/*import { HomeViewComponent } from './components/home-view/home-view.component';*/
+import { CurrentWeatherComponent } from './components/current-weather/current-weather.component';
+import { DateAndTimeComponent } from './components/date-and-time/date-and-time.component';
+import { ConcatenatePipe } from './components/current-weather/concatenate.pipe';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,6 +49,10 @@ const firebaseConfig = {
     NavbarComponent,
     HomeviewComponent,
     WeatherStatusTableComponent
+    /*HomeViewComponent,*/
+    CurrentWeatherComponent,
+    DateAndTimeComponent,
+    ConcatenatePipe
   ],
   imports: [
     BrowserModule,

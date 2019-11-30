@@ -1,0 +1,9 @@
+#time{
+  position: fixed;
+  bottom: 30px; 
+  right : 30px;
+  border-style: dashed;
+  padding: 7px;
+  border-radius: 15px;
+  border-color: darkcyan;
+}
