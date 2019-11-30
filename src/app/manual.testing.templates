@@ -1,0 +1,22 @@
+<!-- Testing firebase -->
+<!-- <div style="display: flex; flex-direction: column">
+    <div style="display: inline">
+        <input placeholder="Enter username" [(ngModel)]="username">
+        <input placeholder="Enter password" [(ngModel)]="password">
+        <input placeholder="Update key" [(ngModel)]="updateKey">
+        <input placeholder="Update content" [(ngModel)]="updateContent">
+    </div>
+    <div style="display: inline; margin:5px;">
+        <button (click)="firebaseService.createUser(username,password)">Create</button>
+        <button (click)="retrieveUser(username)">Retrieve</button>
+        <button (click)="firebaseService.updateUser(username,updateKey,updateContent)">Update</button>
+        <button (click)="firebaseService.deleteUser(username)">Delete</button>
+    </div>
+</div>
+<div>
+    <p>Print out</p>
+    <p>{{username}}</p>
+    <p>{{password}}</p>
+    <p>{{updateKey}}</p>
+    <p>{{updateContent}}</p>
+</div> -->

@@ -1,0 +1,10 @@
+.basic-display {
+    color: white;
+    text-align: center;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 140%;
+}
+
+.hide {
+    display: none;
+}
