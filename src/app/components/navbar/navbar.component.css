@@ -1,3 +1,7 @@
+.nav-bar {
+    min-height: 82px;
+}
+
 nav {
     background: linear-gradient(90deg, rgba(2, 175, 231, 1) 0%, rgba(2, 0, 36, 1) 0%, rgba(0, 212, 255, 1) 0%, rgba(9, 9, 121, 1) 100%);
     z-index: 1000;

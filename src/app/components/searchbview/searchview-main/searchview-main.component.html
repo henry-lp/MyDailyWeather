@@ -2,10 +2,12 @@
     <input class="search-txt" type="text" placeholder="Enter city/country name" [(ngModel)]="searchTxt" />
     <button class="search-btn" (click)="search()"><i class="fa fa-search" aria-hidden="true"></i></button>
 </div>
+<div class="spinner spinner-border text-dark" *ngIf="!humidData && searching" role="status">
+</div>
 <div class="weather-status-table-frame">
     <app-weather-status-table [weatherTableDataSetsObs]="weatherTableDataSetsSub.asObservable()"></app-weather-status-table>
 </div>
-<div class="line-graph-frame bg-white" *ngIf="temperatureData">
+<div class="line-graph-frame bg-white" *ngIf="humidData">
     <ngb-tabset type="pills" class="nav-fill">
         <!-- Temperature -->
         <ngb-tab title="Temperature">

@@ -1,10 +1,12 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { ApiService } from '../api.service';
-import { FirebaseService } from '../firebase.service';
-import { LoginService } from '../login.service';
+import { ApiService } from '../../services/api.service';
+import { FirebaseService } from '../../services/firebase.service';
+import { LoginService } from '../../services/login.service';
 import { first } from 'rxjs/operators';
 import { ChartDataSets } from 'chart.js';
 import { Subject } from 'rxjs';
+import { FormControl } from '@angular/forms';
+import { EventInformerService } from '../../services/event-informer.service';
 
 @Component({
   selector: 'app-personal-view',
@@ -13,13 +15,13 @@ import { Subject } from 'rxjs';
 })
 export class PersonalViewComponent implements OnInit {
   public doneLoading:boolean = false;
+  stateCtrl: FormControl = new FormControl();
   public message:string;
   public loggedIn:boolean;
   public removeResult:string;
   private lineChartData:ChartDataSets[];
 
   private addedLocations:string[] = []; //index match with temp/press/himdityData - used to find index later.
-  public locationsProviderSub: Subject<string[]> = new Subject<any>();
 
   /* Graphs data */
   private overViewTempGraphData: any = {lineChartData:[],lineChartLabels:[]}; //processed json , locationNames order match with lineChartData
@@ -35,7 +37,7 @@ export class PersonalViewComponent implements OnInit {
   public weatherTableData:any = {dataSets:[],dates:[]};
   public weatherTableDataSetsSub:Subject<any> = new Subject();
 
-  constructor(private apiService:ApiService,private firebaseService:FirebaseService,private loginService:LoginService) { }
+  constructor(private apiService:ApiService,private firebaseService:FirebaseService,private loginService:LoginService,public eventInformer:EventInformerService) { }
 
   ngOnInit() {
     /* Check login - if not auth then only display basic*/
@@ -44,6 +46,12 @@ export class PersonalViewComponent implements OnInit {
     this.loginService.loginEvent.subscribe((loggedIn) => {
       this.initView();
     })
+
+    this.eventInformer.personalViewRemoveLocationEvent.asObservable().subscribe((evt)=> {
+      console.log(evt);
+      this.onRemoveCityReq(evt);
+    })
+    this.doneLoading = true;
   }
   
   /* reset loaded data if logout */
@@ -62,7 +70,7 @@ export class PersonalViewComponent implements OnInit {
     this.weatherTableDataSetsSub.next({dataSets:undefined,dates:[]});
 
     this.addedLocations = [];
-    this.locationsProviderSub.next(this.addedLocations);
+    this.eventInformer.navbarAutoCompleteOptionsProvider.next(this.addedLocations);
     this.doneLoading = false;
     this.removeResult = undefined;
     /* Reset overview - unsubscribe all and create new subject */
@@ -93,7 +101,7 @@ export class PersonalViewComponent implements OnInit {
             count = this.processDataForGraph(data,count,locNum);
           })
         })
-        this.locationsProviderSub.next(this.addedLocations);
+        this.eventInformer.navbarAutoCompleteOptionsProvider.next(this.addedLocations);
       } else {
         this.message = "No data to display";
       }
@@ -143,7 +151,6 @@ export class PersonalViewComponent implements OnInit {
     count++;
     /* do this to reduce number of rendering canvas - Special case when the array only have 1 element */
     if(count === locNum || locNum == 1) {
-      console.log("Notified")
       this.overViewTempGraphEventSub.next(this.overViewTempGraphData);
       this.overViewPressGraphEventSub.next(this.overViewPressGraphData);
       this.overViewHumidGraphEventSub.next(this.overViewHumidGraphData);
@@ -165,8 +172,6 @@ export class PersonalViewComponent implements OnInit {
       count++;
       return locationName !== evt.locationName; 
     })
-    console.log(this.weatherTableData);
-    console.log(this.overViewHumidGraphData);
     /* Remove data from component */
     if (foundIndex != undefined) {
       /* Remove from graphs */
@@ -180,7 +185,7 @@ export class PersonalViewComponent implements OnInit {
       this.overViewTempGraphEventSub.next(this.overViewTempGraphData);
       this.overViewPressGraphEventSub.next(this.overViewPressGraphData);
       this.overViewHumidGraphEventSub.next(this.overViewHumidGraphData);
-      this.locationsProviderSub.next(this.addedLocations);
+      this.eventInformer.navbarAutoCompleteOptionsProvider.next(this.addedLocations);
       this.weatherTableDataSetsSub.next(this.weatherTableData);
     }
     /* Remove from cache */
@@ -200,10 +205,16 @@ export class PersonalViewComponent implements OnInit {
   }
 
   /* Helper */
-  randomColorHex():string {
-    return '#'+(Math.random()*0xFFFFFA<<0).toString(16);
-  }
 
+  randomColorHex():string {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  
+  return color;
+}
   generateArray(obj,key){
     return obj[key];
   }

@@ -1,11 +1,12 @@
 import { Component, OnInit, Input, Output,EventEmitter} from '@angular/core';
 import {NgbDropdownConfig} from '@ng-bootstrap/ng-bootstrap';
-import { FirebaseService } from '../firebase.service';
+import { FirebaseService } from '../../services/firebase.service';
 import { Observable } from 'rxjs';
-import { LoginService } from '../login.service';
+import { LoginService } from '../../services/login.service';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { FormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { EventInformerService } from '../../services/event-informer.service';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -13,8 +14,7 @@ import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 })
 export class NavbarComponent implements OnInit {
   @Input() showNavSearch:boolean;
-  @Input() optionsProvider:Observable<string[]>; //provide data for options
-  @Output() locationRemoveEvent = new EventEmitter();
+  optionsProvider:Observable<string[]>; //provide data for options
   closeResult: string;
   registerResult: string;
   deleteResult:string;
@@ -27,27 +27,24 @@ export class NavbarComponent implements OnInit {
   selected: any;
 
   public isNavbarCollapsed = false;
-  constructor(private modalService: NgbModal,config:NgbDropdownConfig,private firebaseService:FirebaseService,public loginService:LoginService) {
+  constructor(private modalService: NgbModal,config:NgbDropdownConfig,private firebaseService:FirebaseService,public loginService:LoginService,public eventInformer:EventInformerService) {
     /* Angular bootstrap dropdown */
     config.placement = 'bottom-right';
     config.autoClose = 'outside';
-
     /* Angular Mat autocomplete */
     this.stateCtrl.valueChanges.pipe(debounceTime(100),distinctUntilChanged()).subscribe(stateCtrl => {
       this.results = this.options.filter(val => {
         return val.toLowerCase().includes(stateCtrl.toLowerCase());
       })
     })
+
+    this.optionsProvider = this.eventInformer.navbarAutoCompleteOptionsProvider.asObservable();
+    this.optionsProvider.subscribe(options => {
+      this.options = options;
+    })
   }
 
-  ngOnInit() {
-    if (this.optionsProvider) {
-      this.optionsProvider.subscribe(options => {
-        console.log(options);
-        this.options = options;
-      })
-    }
-  }
+  ngOnInit() {}
 
   open(content) {
     this.loginService.registerResult = undefined;
@@ -113,7 +110,7 @@ export class NavbarComponent implements OnInit {
 
   /* Emit remove event for above component to delete */
   emitLocationRemoveEvent(val:string) {
-    this.locationRemoveEvent.emit({"locationName":val});
+    this.eventInformer.personalViewRemoveLocationEvent.next({"locationName":val});
   }
 
   del():void {

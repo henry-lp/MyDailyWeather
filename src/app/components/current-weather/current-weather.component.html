@@ -1,10 +1,10 @@
-<div id ="weather">
-    <h1> {{ obj.name | concatenate:',' }}
-        {{ obj.sys.country}}
-        <br>
-        <div>{{ obj.main.temp | number:'1.0-0' | concatenate: '°C'}}
-        </div>  
-        <div> {{ obj.weather[0].description }}</div>
-        <img [src]="'http://openweathermap.org/img/wn/' + obj.weather[0].icon + '@2x.png'">
-    </h1>
+<div class="current-weather-content" *ngIf="obj">
+    <h1>{{ obj.name | concatenate:',' }} {{ obj.sys.country}}</h1>
+    <p class="text-align-center font-size-big"><strong>{{ obj.main.temp | number:'1.0-0' | concatenate: '°C'}}</strong></p>
+    <p class="text-align-center font-size-big weather-description"><strong>{{ obj.weather[0].description }}</strong></p>
+    <img [src]="'http://openweathermap.org/img/wn/' + obj.weather[0].icon + '@2x.png'">
+</div>
+
+<div class="spinner spinner-border text-dark" *ngIf="!obj" role="status">
+    <span class="sr-only">Loading...</span>
 </div>

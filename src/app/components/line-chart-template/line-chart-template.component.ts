@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, SimpleChanges, Output, EventEmitter} from '@angular/core';
 import { ChartDataSets, ChartOptions, ChartType, PointStyle } from 'chart.js';
 import {  Color,Label } from 'ng2-charts';
-import {ApiService} from '../api.service';
-import { LoginService } from '../login.service';
-import { FirebaseService } from '../firebase.service';
+import {ApiService} from '../../services/api.service';
+import { LoginService } from '../../services/login.service';
+import { FirebaseService } from '../../services/firebase.service';
 import { Observable, Subscription } from 'rxjs';
 
 @Component({

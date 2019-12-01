@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../../api.service';
-import { LoginService } from '../../login.service';
-import { FirebaseService } from '../../firebase.service';
+import { ApiService } from '../../../services/api.service';
+import { LoginService } from '../../../services/login.service';
+import { FirebaseService } from '../../../services/firebase.service';
 import { first } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
@@ -20,6 +20,7 @@ export class SearchviewMainComponent implements OnInit {
   public searchTxt: string;
   public prevSearchTxt: string;
   public locationResult:string;
+  public searching:boolean = false;
 
   /* Table data */
   public weatherTableData:any = {dataSets:[],dates:[]};
@@ -31,6 +32,7 @@ export class SearchviewMainComponent implements OnInit {
   }
   
   search():void {
+    this.searching = false;
     if (this.prevSearchTxt === this.searchTxt) {
       return // no searching if it's equal to previous
     }
@@ -95,6 +97,8 @@ export class SearchviewMainComponent implements OnInit {
     weatherTableData.dates = lineChartLabels;
     this.weatherTableData = weatherTableData;
     this.weatherTableDataSetsSub.next(this.weatherTableData);
+
+    this.searching = true;
   }
 
   /* expect {cityName: nameVal} */
@@ -122,6 +126,11 @@ export class SearchviewMainComponent implements OnInit {
 
   /* Helper */
   randomColorHex():string {
-    return '#'+(Math.random()*0xFFFFFF<<0).toString(16);
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
   }
 }

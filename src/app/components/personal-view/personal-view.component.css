@@ -1,0 +1,23 @@
+.basic-display {
+    color: white;
+    text-align: center;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 140%;
+}
+
+.hide {
+    display: none;
+}
+
+.search-field {
+    position: sticky;
+    margin: 2% 20% 5% 20%;
+    color: white;
+}
+
+.nav-searchbar {
+    background-color: white;
+    color: white;
+    padding: 1%;
+    border: 2px solid black;
+}

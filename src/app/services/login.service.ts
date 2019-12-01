@@ -1,6 +1,6 @@
 import { Injectable, Output ,EventEmitter} from '@angular/core';
 import { FirebaseService } from './firebase.service';
-import { Token } from './token';
+import { Token } from '../classes/token';
 import { Subject } from 'rxjs';
 
 @Injectable({

@@ -2,6 +2,10 @@
     color: red;
 }
 
+.spinner {
+    margin-top: 2%;
+}
+
 .weather-status-table-frame {
     padding-top: 2%;
 }

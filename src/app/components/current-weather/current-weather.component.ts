@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { WeatherDataService } from '../../services/weather-data.service';
+import { WeatherDataService } from '../services/weather-data.service';
 
 @Component({
   selector: 'app-current-weather',
@@ -9,7 +9,7 @@ import { WeatherDataService } from '../../services/weather-data.service';
 export class CurrentWeatherComponent implements OnInit {
   lat;
   lon;
-  obj:any = {name: '', main: { temp:''}, sys: {country:''}, weather:[0]};
+  obj:any;
 
   getLocation(){
     if(navigator.geolocation){
@@ -18,7 +18,6 @@ export class CurrentWeatherComponent implements OnInit {
         this.lon=success.coords.longitude;
 
         this.weather.getData(this.lat,this.lon).subscribe(response =>{
-          console.log(response);
           this.obj = response;
         })
       },
