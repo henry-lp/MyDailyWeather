@@ -1,1 +1,6 @@
 node_modules/
+.firebase/
+.firebaserc
+database.rules.json
+dist/
+firebase.json

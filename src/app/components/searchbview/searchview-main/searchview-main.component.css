@@ -2,6 +2,10 @@
     color: red;
 }
 
+.color-black {
+    color: black;
+}
+
 .spinner {
     margin-top: 2%;
 }
@@ -25,7 +29,7 @@
 .search-box {
     display: inline-block;
     background: #2f3640;
-    /* height: 40px; */
+    position: relative;
     border-radius: 40px;
     padding: 10px;
     width: 50%;
@@ -56,11 +60,12 @@
 
 .result-display {
     color: white;
+    padding-top: 2%;
 }
 
 @media only screen and (max-width: 600px) {
     /* this hide button should not work for desktop */
     .search-box {
-        width: 90%;
+        width: 95%;
     }
 }

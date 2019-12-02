@@ -12,7 +12,7 @@ import { ApiService } from './services/api.service';
 import { SearchviewMainComponent } from './components/searchbview/searchview-main/searchview-main.component';
 import { ChartsModule } from 'ng2-charts';
 import { LineChartTemplateComponent } from './components/line-chart-template/line-chart-template.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
 import { PersonalViewComponent } from './components/personal-view/personal-view.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeviewComponent } from './components/homeview/homeview.component';
@@ -22,17 +22,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material';
 import { InViewportModule } from 'ng-in-viewport';
 import { WeatherStatusTableComponent } from './components/weather-status-table/weather-status-table.component';
-
-const firebaseConfig = {
-  apiKey: "AIzaSyAzHKfSb1KJb0MQD_gl6_fHd11c9JG2L84",
-  authDomain: "mydailyweather.firebaseapp.com",
-  databaseURL: "https://mydailyweather.firebaseio.com",
-  projectId: "mydailyweather",
-  storageBucket: "mydailyweather.appspot.com",
-  messagingSenderId: "495302893237",
-  appId: "1:495302893237:web:4868af3d224db9b5ff68fc",
-  measurementId: "G-23K96S52TN"
-}
+import {environment} from '../environments/environment'
 
 import { CurrentWeatherComponent } from './components/current-weather/current-weather.component';
 import { DateAndTimeComponent } from './components/date-and-time/date-and-time.component';
@@ -58,14 +48,15 @@ import { ConcatenatePipe } from './components/current-weather/concatenate.pipe';
     FormsModule,
     ReactiveFormsModule,
     ChartsModule,
-    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     NgbModule,
     BrowserAnimationsModule,
     MatAutocompleteModule,
     MatFormFieldModule,
     MatInputModule,
-    InViewportModule
+    InViewportModule,
+    NgbPopoverModule
   ],
   providers: [
     ApiService,FirebaseService

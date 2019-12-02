@@ -5,8 +5,10 @@ import { Observable } from 'rxjs';
 import { LoginService } from '../../services/login.service';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { FormControl } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, map,filter } from 'rxjs/operators';
 import { EventInformerService } from '../../services/event-informer.service';
+import { Router, NavigationEnd } from '@angular/router';
+
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -27,7 +29,9 @@ export class NavbarComponent implements OnInit {
   selected: any;
 
   public isNavbarCollapsed = false;
-  constructor(private modalService: NgbModal,config:NgbDropdownConfig,private firebaseService:FirebaseService,public loginService:LoginService,public eventInformer:EventInformerService) {
+  public displaySearch:boolean = false;
+
+  constructor(private router:Router, private modalService: NgbModal,config:NgbDropdownConfig,private firebaseService:FirebaseService,public loginService:LoginService,public eventInformer:EventInformerService) {
     /* Angular bootstrap dropdown */
     config.placement = 'bottom-right';
     config.autoClose = 'outside';
@@ -42,9 +46,14 @@ export class NavbarComponent implements OnInit {
     this.optionsProvider.subscribe(options => {
       this.options = options;
     })
+
+    this.router.events.forEach(e => {if(e instanceof NavigationEnd) {
+      this.displaySearch = this.router.url.toString() == "/profile";
+    }})
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   open(content) {
     this.loginService.registerResult = undefined;
@@ -114,7 +123,6 @@ export class NavbarComponent implements OnInit {
   }
 
   del():void {
-    console.log(this.selected + " is deleted");
     this.stateCtrl.setValue("");
   }
 }

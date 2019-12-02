@@ -17,7 +17,6 @@ export class AppComponent {
   constructor() {}
 
   prepareRoute(outlet: RouterOutlet) {
-    console.log(outlet.activatedRouteData['animation']);
     return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
   }
 }

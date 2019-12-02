@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
-import { catchError, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
-import { Subject } from 'rxjs';
+import {environment} from '../../environments/environment'
 
 const ENDPOINT = 'https://community-open-weather-map.p.rapidapi.com/';
-const APIKEY = 'c536e97a7amshfb74659432df827p155167jsna7514caa4538';
 const httpOptions = {
-  headers: new HttpHeaders({ 'x-rapidapi-key': 'c536e97a7amshfb74659432df827p155167jsna7514caa4538'})
+  headers: new HttpHeaders({ 'x-rapidapi-key': environment.APIKEY})
 };
 
 @Injectable({
@@ -24,11 +23,13 @@ export class ApiService {
 
   /* HTTP methods */
 
+
   /* 
    * Return today weather status
    */
-  getLocationTodayInfo(query:string): Observable<any> {
-    const url = ENDPOINT + "weather?" + "q=" + query;
+  getLocationTodayInfo(lat:any="",lon:any = "",units:string = "",query:string=""): Observable<any> {
+    const url = ENDPOINT + "weather?" + "lat=" + lat + "&lon=" + lon + "&unit=" + units + "&q=" + query;
+ 
     return this.http.get<any>(url, httpOptions)
     .pipe(
       map(resp => this.handleResponse(resp))

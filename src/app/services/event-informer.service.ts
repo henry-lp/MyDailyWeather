@@ -8,6 +8,9 @@ import { Subject } from 'rxjs';
 export class EventInformerService {
   public navbarAutoCompleteOptionsProvider:Subject<any> = new Subject(); // To provide options to the autocomplete input on the navbar at personal view 
   public personalViewRemoveLocationEvent:Subject<any> = new Subject(); // format {locationName:string}
-
+  public overViewTempGraphEventSub: Subject<any> = new Subject<any>();
+  public overViewPressGraphEventSub: Subject<any> = new Subject<any>();
+  public overViewHumidGraphEventSub: Subject<any> = new Subject<any>();
+  
   constructor() { }
 }

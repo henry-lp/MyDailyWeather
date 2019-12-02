@@ -48,7 +48,6 @@ export class PersonalViewComponent implements OnInit {
     })
 
     this.eventInformer.personalViewRemoveLocationEvent.asObservable().subscribe((evt)=> {
-      console.log(evt);
       this.onRemoveCityReq(evt);
     })
     this.doneLoading = true;

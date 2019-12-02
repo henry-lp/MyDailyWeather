@@ -1,6 +1,8 @@
 <div class="line-chart-display" *ngIf="finishLoading">
     <div class="overview-header">
-        <h2>{{graphTitle}}</h2>
+        <h3> <button *ngIf="!overViewGraph" type="button" class="btn btn-outline-secondary" placement="bottom" ngbPopover="Hover/click(mobile) on the graph to show add/remove button" popoverTitle="Instruction">
+            ?
+        </button> {{graphTitle}}</h3>
         <div class="btn-group" *ngIf="!overViewGraph ">
             <button *ngIf="!personalView " class="btn btn-dark " (click)="addCity() "><i class="fa fa-folder-plus "></i></button>
             <button class="btn btn-dark " (click)="removeCity() "><i class="fa fa-folder-minus "></i></button>

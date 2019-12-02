@@ -3,10 +3,9 @@
 </div>
 <div class="spinner spinner-border text-dark" *ngIf="!doneLoading" role="status">
 </div>
-<div class="weather-status-table-frame">
-    <app-weather-status-table [weatherTableDataSetsObs]="weatherTableDataSetsSub.asObservable()"></app-weather-status-table>
-</div>
+
 <div class="container">
+    <app-weather-status-table [weatherTableDataSetsObs]="weatherTableDataSetsSub.asObservable()"></app-weather-status-table>
     <app-line-chart-template [class.hide]="!doneLoading" [graphTitle]="'Temperature (°C)'" [overViewGraphUpdateEvent]="overViewTempGraphEventSub.asObservable()" (removeCityReq)="onRemoveCityReq($event)" [overViewGraph]="true"></app-line-chart-template>
     <app-line-chart-template [class.hide]="!doneLoading" [graphTitle]="'Pressure (Pa)'" [overViewGraphUpdateEvent]="overViewPressGraphEventSub.asObservable()" (removeCityReq)="onRemoveCityReq($event)" [overViewGraph]="true"></app-line-chart-template>
     <app-line-chart-template [class.hide]="!doneLoading" [graphTitle]="'Humidity (%)'" [overViewGraphUpdateEvent]="overViewHumidGraphEventSub.asObservable()" (removeCityReq)="onRemoveCityReq($event)" [overViewGraph]="true"></app-line-chart-template>

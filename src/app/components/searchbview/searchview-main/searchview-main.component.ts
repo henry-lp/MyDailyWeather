@@ -3,6 +3,7 @@ import { ApiService } from '../../../services/api.service';
 import { LoginService } from '../../../services/login.service';
 import { FirebaseService } from '../../../services/firebase.service';
 import { first } from 'rxjs/operators';
+import { EventInformerService } from 'src/app/services/event-informer.service';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -21,12 +22,12 @@ export class SearchviewMainComponent implements OnInit {
   public prevSearchTxt: string;
   public locationResult:string;
   public searching:boolean = false;
+  public searchSuccess:boolean;
 
   /* Table data */
-  public weatherTableData:any = {dataSets:[],dates:[]};
   public weatherTableDataSetsSub:Subject<any> = new Subject();
 
-  constructor(public apiService:ApiService,private loginService:LoginService,private firebaseService:FirebaseService) { }
+  constructor(public apiService:ApiService,private loginService:LoginService,private firebaseService:FirebaseService,private eventInformer:EventInformerService) { }
 
   ngOnInit() {
   }
@@ -40,7 +41,10 @@ export class SearchviewMainComponent implements OnInit {
     this.locationResult = undefined;
     this.apiService.getLocationForecastInfo(this.searchTxt).pipe(first()).subscribe(data => {
       this.processDataForGraph(data);},
-      err => {this.locationResult = err.error.message}
+      err => {
+        this.searchSuccess = false;
+        this.locationResult = err.error.message
+      }
     )
   }
 
@@ -63,7 +67,7 @@ export class SearchviewMainComponent implements OnInit {
 
       /* Construct weather status table */
       weatherTableDataSet.description.push(data.weather[0].main);
-      weatherTableDataSet.imgSrc.push("http://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png")
+      weatherTableDataSet.imgSrc.push("https://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png")
     })
 
     /* Graph data */
@@ -90,14 +94,12 @@ export class SearchviewMainComponent implements OnInit {
     this.humidData = humidDataPackage;
 
     /* table data */
-    weatherTableDataSet.locationName = inputData.city.name;
-
-    var weatherTableData = {dataSets:[],dates:[]};
-    weatherTableData.dataSets.push(weatherTableDataSet);
+    var weatherTableData:any = {dataSets:[],dates:[]};
     weatherTableData.dates = lineChartLabels;
-    this.weatherTableData = weatherTableData;
-    this.weatherTableDataSetsSub.next(this.weatherTableData);
-
+    weatherTableDataSet.locationName = inputData.city.name;
+    weatherTableData.dataSets.push(weatherTableDataSet);
+    this.weatherTableDataSetsSub.next(weatherTableData);
+    
     this.searching = true;
   }
 
@@ -106,14 +108,16 @@ export class SearchviewMainComponent implements OnInit {
   onAddCityReq(evt:any):void {
     if (this.loginService.loggedIn) {
       this.firebaseService.appendUserDataToList(this.loginService.username,"apiData",evt.locationName).subscribe(res => {
+          this.searchSuccess = true;
           this.locationResult = "Location " + res;
         }
       );
     } else {
+      this.searchSuccess = false;
       this.locationResult = "log in required!";
     }
   }
-
+  
   onRemoveCityReq(evt:any):void {
     if (this.loginService.loggedIn) {
       this.firebaseService.removeUserDataFromList(this.loginService.username,"apiData",evt.locationName).subscribe(res => {
@@ -133,4 +137,10 @@ export class SearchviewMainComponent implements OnInit {
     }
     return color;
   }
+
+  close() {
+    this.locationResult = undefined;
+    this.searchSuccess = undefined;
+  }
+
 }

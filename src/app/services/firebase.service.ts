@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Account } from '../classes/account';
 import { map, first } from 'rxjs/operators';
 @Injectable({
@@ -68,7 +68,7 @@ export class FirebaseService {
         items.update(list[0].key,upJson);
         return " added!";
       } else {
-        return " already existed";
+        return " already existed in your profile";
       }
     }));
     return addResult;
@@ -86,10 +86,9 @@ export class FirebaseService {
         var upJson = {};
         upJson[keyName] = jsonObj;
         items.update(list[0].key,upJson);
-        console.log("removed",upJson)
         return " removed!";
       } else {
-        return " not exist";
+        return " not exist in your profile";
       }
     }));
     return removeResult;

@@ -1,16 +1,14 @@
-<div class="container">
-    <table class="table table-responsive-lg" *ngIf="weatherTableDataSets">
-        <thead class="thead-dark">
-            <tr>
-                <th scope="centering col">Cities</th>
-                <th scope="col" *ngFor="let date of dates">{{date}}</th>
-            </tr>
-        </thead>
-        <tbody class="bg-light-grey">
-            <tr *ngFor="let data of weatherTableDataSets ">
-                <th scope="row ">{{data.locationName}}</th>
-                <td *ngFor="let des of data.description; let i = index ">{{des}} <img src="{{data.imgSrc[i]}} "></td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+<table class="table table-responsive-lg" *ngIf="weatherTableDataSets">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="centering col">Cities</th>
+            <th scope="col" *ngFor="let date of dates">{{date}}</th>
+        </tr>
+    </thead>
+    <tbody class="bg-light-grey">
+        <tr *ngFor="let data of weatherTableDataSets ">
+            <th scope="row ">{{data.locationName}}</th>
+            <td *ngFor="let des of data.description; let i = index ">{{des}} <img src="{{data.imgSrc[i]}} "></td>
+        </tr>
+    </tbody>
+</table>

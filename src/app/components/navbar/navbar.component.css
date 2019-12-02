@@ -9,7 +9,7 @@ nav {
 
 .navbar-brand {
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    font-size: 140%;
+    font-size: 130%;
 }
 
 .custom-brand {
@@ -57,4 +57,5 @@ nav {
 a {
     text-decoration: none;
     text-decoration-color: white;
+    outline: none;
 }

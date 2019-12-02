@@ -48,7 +48,6 @@ export class LoginService {
     this.registerResult = undefined;
     this.firebaseService.createUser(username,password).subscribe(res => {
       this.registerResult = res;
-      console.log(this.registerResult);
     });
   }
 

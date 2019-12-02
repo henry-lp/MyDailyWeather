@@ -4,7 +4,7 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div [ngbCollapse]="isNavbarCollapsed" class="collapse navbar-collapse justify-content-end" id="navbarsDefault">
-        <mat-form-field class="w-100" *ngIf="loginService.loggedIn">
+        <mat-form-field class="w-100" *ngIf="loginService.loggedIn && displaySearch">
             <div class="nav-searchbar input-group">
                 <input class="mat-input" type="text" placeholder="Find & Select to delete added data" matInput [formControl]="stateCtrl" [matAutocomplete]="auto">
                 <div class="spinner spinner-border text-light hide" role="status">

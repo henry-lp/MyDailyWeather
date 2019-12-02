@@ -1,35 +1,31 @@
 <div class="search-box">
-    <input class="search-txt" type="text" placeholder="Enter city/country name" [(ngModel)]="searchTxt" />
+    <input class="search-txt" (keydown.enter)="search()" type="text" placeholder="Enter city/country name" [(ngModel)]="searchTxt" />
     <button class="search-btn" (click)="search()"><i class="fa fa-search" aria-hidden="true"></i></button>
-</div>
-<div class="spinner spinner-border text-dark" *ngIf="!humidData && searching" role="status">
-</div>
-<div class="weather-status-table-frame">
-    <app-weather-status-table [weatherTableDataSetsObs]="weatherTableDataSetsSub.asObservable()"></app-weather-status-table>
-</div>
-<div class="line-graph-frame bg-white" *ngIf="humidData">
-    <ngb-tabset type="pills" class="nav-fill">
-        <!-- Temperature -->
-        <ngb-tab title="Temperature">
-            <ng-template ngbTabContent>
-                <app-line-chart-template [inputDataPackage]="temperatureData" [graphTitle]="'Temperature (°C)'" (addCityReq)="onAddCityReq($event)" (removeCityReq)="onRemoveCityReq($event)"></app-line-chart-template>
-            </ng-template>
-        </ngb-tab>
-        <!-- Pressure -->
-        <ngb-tab title="Pressure">
-            <ng-template ngbTabContent>
-                <app-line-chart-template [inputDataPackage]="pressureData" [graphTitle]="'Pressure (Pa)'" (addCityReq)="onAddCityReq($event)" (removeCityReq)="onRemoveCityReq($event)"></app-line-chart-template>
-            </ng-template>
-        </ngb-tab>
-        <!-- Humidity -->
-        <ngb-tab title="Humidity">
-            <ng-template ngbTabContent>
-                <app-line-chart-template [inputDataPackage]="humidData" [graphTitle]="'Humidity (%)'" (addCityReq)="onAddCityReq($event)" (removeCityReq)="onRemoveCityReq($event)"></app-line-chart-template>
-            </ng-template>
-        </ngb-tab>
-    </ngb-tabset>
 </div>
 
 <div class="result-display color-red" *ngIf="locationResult">
-    {{locationResult}}
+    <ngb-alert *ngIf="searchSuccess" type="success" (close)="close()">{{locationResult}}</ngb-alert>
+    <ngb-alert *ngIf="!searchSuccess" type="warning" (close)="close()">{{locationResult}}</ngb-alert>
+</div>
+<div class="container weather-status-table-frame">
+    <app-weather-status-table [weatherTableDataSetsObs]=" weatherTableDataSetsSub.asObservable() "></app-weather-status-table>
+    <div class="line-graph-frame bg-white" *ngIf="humidData">
+        <ngb-tabset type="pills " class="nav-fill">
+            <ngb-tab title="Temperature ">
+                <ng-template ngbTabContent>
+                    <app-line-chart-template [inputDataPackage]="temperatureData " [graphTitle]=" 'Temperature (°C)' " (addCityReq)="onAddCityReq($event) " (removeCityReq)="onRemoveCityReq($event) "></app-line-chart-template>
+                </ng-template>
+            </ngb-tab>
+            <ngb-tab title="Pressure ">
+                <ng-template ngbTabContent>
+                    <app-line-chart-template [inputDataPackage]="pressureData " [graphTitle]=" 'Pressure (Pa)' " (addCityReq)="onAddCityReq($event) " (removeCityReq)="onRemoveCityReq($event) "></app-line-chart-template>
+                </ng-template>
+            </ngb-tab>
+            <ngb-tab title="Humidity ">
+                <ng-template ngbTabContent>
+                    <app-line-chart-template [inputDataPackage]="humidData " [graphTitle]=" 'Humidity (%)' " (addCityReq)="onAddCityReq($event) " (removeCityReq)="onRemoveCityReq($event) "></app-line-chart-template>
+                </ng-template>
+            </ngb-tab>
+        </ngb-tabset>
+    </div>
 </div>

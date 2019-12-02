@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { WeatherDataService } from '../services/weather-data.service';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-current-weather',
@@ -11,20 +11,17 @@ export class CurrentWeatherComponent implements OnInit {
   lon;
   obj:any;
 
+  public temp:number;
   getLocation(){
     if(navigator.geolocation){
       navigator.geolocation.getCurrentPosition(success =>{
         this.lat=success.coords.latitude;
         this.lon=success.coords.longitude;
 
-        this.weather.getData(this.lat,this.lon).subscribe(response =>{
+        this.apiService.getLocationTodayInfo(this.lat,this.lon,"metric").subscribe(response =>{
           this.obj = response;
+          this.temp = Math.round((+this.obj.main.temp - 273.1) * 100) / 100; // Convert from kelvin to celcius
         })
-      },
-      function(error) {
-        if (error.code == error.PERMISSION_DENIED)
-          console.log("you denied me :-(");
-          document.getElementById("weather").innerHTML=" <h1>No current position weather information available<h1/>"
       });
     }
    
@@ -32,7 +29,7 @@ export class CurrentWeatherComponent implements OnInit {
   }
 
 
-  constructor(private weather:WeatherDataService) { 
+  constructor(private apiService:ApiService) { 
     
   }
 
