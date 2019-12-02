@@ -1,12 +1,12 @@
 .current-weather-content {
-    color: #f7d6af;
+    color: #000000;
     text-align: center;
     width: 100%;
     height: 100%;
 }
 
 .weather-description {
-    color: #e6ba87;
+    color: #000000;
 }
 
 .font-size-big {

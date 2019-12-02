@@ -44,6 +44,7 @@ export class FirebaseService {
     return this.db.list(this.collection, ref => ref.orderByChild("username").equalTo(username));
   }
 
+  
   /* update user information with a new value */
   updateUser(username:string,keyName:string,newval:any):void {
     const items = this.db.list(this.collection,ref => ref.orderByChild("username").equalTo(username));
@@ -55,48 +56,26 @@ export class FirebaseService {
     });
   }
 
-  /* Use to append user data in a list*/
   appendUserDataToList(username:string,keyName:string,newval:any):Observable<string> {
     const items = this.db.list(this.collection,ref => ref.orderByChild("username").equalTo(username));
     const addResult = items.snapshotChanges().pipe(first()).pipe(map(list => {
-      var jsonObj = list[0].payload.val()[keyName] || [];
-      /* Only push if value not included */
-      if (!jsonObj.includes(newval)) {
-        jsonObj.push(newval);
-        var upJson = {};
-        upJson[keyName] = jsonObj;
-        items.update(list[0].key,upJson);
-        return " added!";
-      } else {
-        return " already existed in your profile";
-      }
-    }));
+      var payload = {};
+      payload[newval] = "someval";
+      this.db.list(this.collection + "/" + list[0].key).update("apiData",payload);
+      return " added!";
+    }))
     return addResult;
   }
 
-  /* Removed data from the list */
   removeUserDataFromList(username:string,keyName,valToRemove:any):Observable<string> {
     const items = this.db.list(this.collection,ref => ref.orderByChild("username").equalTo(username));
     const removeResult = items.snapshotChanges().pipe(first()).pipe(map(list => {
-      var jsonObj = list[0].payload.val()[keyName] || [];
-      if (jsonObj.includes(valToRemove)) {
-        jsonObj = jsonObj.filter(val => {
-          return val !== valToRemove;
-        })
-        var upJson = {};
-        upJson[keyName] = jsonObj;
-        items.update(list[0].key,upJson);
-        return " removed!";
-      } else {
-        return " not exist in your profile";
-      }
-    }));
+      var li = this.db.list(this.collection + "/" + list[0].key + "/apiData");
+      li.remove(valToRemove);
+      return " removed!";
+    }))
     return removeResult;
-  }
-
-  checkValueExisted() {
-
-  }
+  } 
 
   deleteUser(username:string):Observable<string> {
     const obs = this.checkUserExisted(username).pipe(map(existed => {
@@ -105,9 +84,8 @@ export class FirebaseService {
       } else {
         const items = this.db.list(this.collection,ref => ref.orderByChild("username").equalTo(username));
         items.snapshotChanges().subscribe(list => {
-        const snapShot = list[0];
-        if (list !== []) {
-            items.remove(snapShot.key);
+          if (list !== []) {
+            items.remove(list[0].key);
           }
         })
         return "deleted successfully";

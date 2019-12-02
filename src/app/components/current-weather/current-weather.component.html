@@ -1,6 +1,6 @@
 <div class="current-weather-content" *ngIf="obj">
     <h1>{{ obj.name | concatenate:',' }} {{ obj.sys.country}}</h1>
-    <p class="text-align-center font-size-big"><strong>{{ temp | number:'1.0-0' | concatenate: '°C'}}</strong></p>
+    <p class="text-align-center font-size-big temperature-display"><strong>{{ temp | number:'1.0-0' | concatenate: '°C'}}</strong></p>
     <p class="text-align-center font-size-big weather-description"><strong>{{ obj.weather[0].description }}</strong></p>
     <img [src]="'https://openweathermap.org/img/wn/' + obj.weather[0].icon + '@2x.png'">
 </div>

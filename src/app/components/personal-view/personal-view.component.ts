@@ -92,15 +92,15 @@ export class PersonalViewComponent implements OnInit {
     this.firebaseService.retrieveUser(this.loginService.username).valueChanges().pipe(first()).subscribe(list => {
       if (list[0].apiData) {
         var count = 1;
-        var locNum = list[0].apiData.length;
-        this.addedLocations = list[0].apiData;
-        this.addedLocations.map(cityName => {
-          return this.apiService.getLocationForecastInfo(cityName).pipe(first()).subscribe(async data => {
+        var apiDataList = Object.keys(list[0].apiData); //convert from json to list
+        var locNum = apiDataList.length;
+        apiDataList.map(cityName => {
+          this.apiService.getLocationForecastInfo(cityName).pipe(first()).subscribe(async data => {
             this.apiService.addToForecastCache(cityName,data);
-            count = this.processDataForGraph(data,count,locNum);
+            count = this.processDataForGraph(data,count,locNum); //tiny risk of data race on count, happens only if time sum of data process and api data fetch of 2 async is the same
           })
         })
-        this.eventInformer.navbarAutoCompleteOptionsProvider.next(this.addedLocations);
+        this.eventInformer.navbarAutoCompleteOptionsProvider.next(apiDataList);
       } else {
         this.message = "No data to display";
       }
@@ -110,8 +110,7 @@ export class PersonalViewComponent implements OnInit {
 
   processDataForGraph(inputData:any,count:number,locNum:number):number {
     var lineChartLabels = [];
-    var lineChartData = [];
-    var pointStyle = [];
+
     var weatherTableDataSet = {description:[],imgSrc:[],locationName:""};
 
     /* init format for all data types */
@@ -126,7 +125,7 @@ export class PersonalViewComponent implements OnInit {
 
       /* Construct weather status table */
       weatherTableDataSet.description.push(data.weather[0].main);
-      weatherTableDataSet.imgSrc.push("http://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png")
+      weatherTableDataSet.imgSrc.push("https://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png")
 
       /* Add point style - currently does not work - issue on github*/
       lineChartLabels.push(this.apiService.readDate(data.dt));
@@ -155,6 +154,7 @@ export class PersonalViewComponent implements OnInit {
       this.overViewHumidGraphEventSub.next(this.overViewHumidGraphData);
       this.weatherTableDataSetsSub.next(this.weatherTableData);
     }
+    this.addedLocations.push(inputData.city.name);
     return count;
   }
 
@@ -171,15 +171,16 @@ export class PersonalViewComponent implements OnInit {
       count++;
       return locationName !== evt.locationName; 
     })
+
     /* Remove data from component */
-    if (foundIndex != undefined) {
+    if (foundIndex !== undefined) {
       /* Remove from graphs */
       this.overViewTempGraphData.lineChartData.splice(foundIndex,1);
       this.overViewPressGraphData.lineChartData.splice(foundIndex,1);
       this.overViewHumidGraphData.lineChartData.splice(foundIndex,1);
       /* Remove from table */
       this.weatherTableData.dataSets.splice(foundIndex,1);
-
+      console.log(this.weatherTableData);
       /* Update */
       this.overViewTempGraphEventSub.next(this.overViewTempGraphData);
       this.overViewPressGraphEventSub.next(this.overViewPressGraphData);
