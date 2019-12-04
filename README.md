@@ -1,10 +1,15 @@
-# MyDailyWeather
+# Description
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.18.
 
 Project for course DH2624, building a web using open weather api with Angular framework.
 
-Init project with `npm install` , then start with `npm start` and visit `http://localhost:4200/` thereafter
+Init project with `npm install` , then start with `npm start` and visit `http://localhost:4200/` 
+
+Features: 
+* Show weather based on your current shared location 
+* Show weather today and also forecast weather for the next 6 days given a search location
+* Can register and login to save locations in watchlists for later displays to study in your personal profile. 
 
 ## Basic contribution rule
 
