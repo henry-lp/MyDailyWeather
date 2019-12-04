@@ -9,7 +9,10 @@ Init project with `npm install` , then start with `npm start` and visit `http://
 Features: 
 * Show weather based on your current shared location 
 * Show weather today and also forecast weather for the next 6 days given a search location
-* Can register and login to save locations in watchlists for later displays to study in your personal profile. 
+* Can register and login to save locations in watchlists for later displays to study in your personal profile.
+* Multiple logins into same account can add and remove data without inconsistency in database.
+* No inconsistency in any graphs when add new data or remove added data, also when logout or login.
+* Mobile view
 
 ## Basic contribution rule
 
