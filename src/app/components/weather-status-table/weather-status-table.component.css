@@ -16,3 +16,7 @@ img {
 .bg-light-grey {
     background-color: #D3D3D3;
 }
+
+.pointer {
+    cursor: pointer;
+}

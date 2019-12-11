@@ -100,6 +100,7 @@ export class PersonalViewComponent implements OnInit {
             count = this.processDataForGraph(data,count,locNum); //tiny risk of data race on count, happens only if time sum of data process and api data fetch of 2 async is the same
           })
         })
+        this.message = "Please click on table entry to delete"
         this.eventInformer.navbarAutoCompleteOptionsProvider.next(apiDataList);
       } else {
         this.message = "No data to display";

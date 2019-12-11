@@ -4,7 +4,7 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div [ngbCollapse]="isNavbarCollapsed" class="collapse navbar-collapse justify-content-end" id="navbarsDefault">
-        <mat-form-field class="form-field" *ngIf="loginService.loggedIn && displaySearch">
+        <!-- <mat-form-field class="form-field" *ngIf="loginService.loggedIn && displaySearch">
             <div class="nav-searchbar input-group">
                 <input class="mat-input" type="text" placeholder="Find & Select to delete added data" matInput [formControl]="stateCtrl" [matAutocomplete]="auto">
                 <div class="spinner spinner-border text-light hide" role="status">
@@ -14,7 +14,7 @@
             <mat-autocomplete #auto="matAutocomplete" (optionSelected)='emitLocationRemoveEvent($event.option.value)'>
                 <mat-option class="mat-option" *ngFor="let result of results" [value]="result">{{result}}</mat-option>
             </mat-autocomplete>
-        </mat-form-field>
+        </mat-form-field> -->
         <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="nav-link no-text-wrap" routerLink="/search" routerLinkActive="active">

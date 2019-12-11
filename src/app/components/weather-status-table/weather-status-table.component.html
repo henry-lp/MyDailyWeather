@@ -1,4 +1,4 @@
-<table class="table table-responsive-lg" *ngIf="weatherTableDataSets">
+<table class="table table-responsive-lg" [class.table-hover]="removable" *ngIf="weatherTableDataSets">
     <thead class="thead-dark">
         <tr>
             <th scope="centering col">Cities</th>
@@ -6,9 +6,19 @@
         </tr>
     </thead>
     <tbody class="bg-light-grey">
-        <tr *ngFor="let data of weatherTableDataSets ">
-            <th scope="row ">{{data.locationName}}</th>
+        <tr [class.pointer]="removable" *ngFor="let data of weatherTableDataSets " (click)="open(confirmDelContent,data.locationName)">
+            <th scope="row">{{data.locationName}}</th>
             <td *ngFor="let des of data.description; let i = index ">{{des}} <img src="{{data.imgSrc[i]}} "></td>
         </tr>
     </tbody>
 </table>
+
+<ng-template #confirmDelContent let-modal>
+    <div class="modal-header">
+        <h4>Do you want to remove <strong>{{cityToRemove}}</strong>?</h4>
+    </div>
+    <div class="modal-body">
+        <button class="btn" (click)="modal.close();removeCity();">Yes</button>
+        <button class="btn" (click)="modal.close();reject();">No</button>
+    </div>
+</ng-template>
