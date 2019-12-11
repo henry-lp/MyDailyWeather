@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { slideInAnimation } from './animation';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet, Router, NavigationStart } from '@angular/router';
 import { Subject } from 'rxjs';
-import { FirebaseService } from './services/firebase.service';
-import { AngularFireDatabase } from 'angularfire2/database';
-import { first,map } from 'rxjs/operators';
+import { LoginService } from './services/login.service';
+import { Navigation } from 'selenium-webdriver';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -17,46 +16,16 @@ import { first,map } from 'rxjs/operators';
 export class AppComponent {
   private EventToChildSub: Subject<any> = new Subject();
   collection: string = "/accounts";
-  constructor(private db:AngularFireDatabase) {
-    this.appendData("cindy","apiData","tokyo")
+  constructor(private loginService:LoginService,private router: Router) {
+    this.loginInit();
   }
 
-  appendData(username:string,keyName:string,newval:any):void {
-    const items = this.db.list(this.collection,ref => ref.orderByChild("username").equalTo(username));
-    const addResult = items.snapshotChanges().pipe(first()).pipe(map(list => {
-      var jsonObj = list[0].payload.val()[keyName] || [];
-      /* Only push if value not included */
-      var objKey = list[0].key;
-
-      var payload = {};
-      payload[newval] = "someval";
-      /* console.log(objKey);
-      this.db.object(this.collection + "/" + objKey)
-      console.log(this.db.list(this.collection + "/" + objKey).update("apiData",payload)) */
-      /* this.db.list(this.collection + "/" + objKey + "/apiData").snapshotChanges().pipe(map(items => {
-        return items.map(a =>  a.payload.key)
-      })).subscribe(val => {
-        console.log(val);
-      }); */
-      /* var li = this.db.list(this.collection + "/" + objKey + "/apiData");
-      li.remove(newval); */
-      /* li.snapshotChanges().subscribe(dataList => {
-        console.log(dataList);
-        if (dataList){
-          
-        }
-      }) */
-
-      /* if (!jsonObj.includes(newval)) {
-        jsonObj.push(newval);
-        var upJson = {};
-        upJson[keyName] = jsonObj;
-        items.update(list[0].key,upJson);
-        return " added!";
-      } else {
-        return " already existed in your profile";
-      } */
-    })).subscribe(val => {});
+  loginInit() {
+    var username = localStorage.getItem("myDailyWeatherUserName");
+    var password = localStorage.getItem("myDailyWeatherPassword");
+    if (username && password){
+      this.loginService.login(username,password);
+    }
   }
 
   prepareRoute(outlet: RouterOutlet) {

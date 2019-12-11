@@ -16,7 +16,7 @@ export class LoginService {
   password: string;
   loginEvent: Subject<any> = new Subject<any>(); //subscribe to listen for loggin changes, current only inform if someone logged in.
 
-  constructor(private firebaseService:FirebaseService) { }
+  constructor(private firebaseService:FirebaseService) {}
 
   login(username:string,password:string):void {
     this.loginError = undefined;
@@ -28,6 +28,11 @@ export class LoginService {
         /* Save password and username */
         this.password = password;
         this.username = username;
+
+        /* Cache login */
+        localStorage.setItem("myDailyWeatherUserName",this.username);
+        localStorage.setItem("myDailyWeatherPassword",this.password);
+
         this.loginEvent.next(this.loggedIn);
       } else {
         this.loginError = "Wrong, please double check!";
@@ -41,6 +46,8 @@ export class LoginService {
     this.loggedIn = false;
     this.password = undefined;
     this.username = undefined;
+    localStorage.setItem("myDailyWeatherUserName",this.username);
+    localStorage.setItem("myDailyWeatherPassword",this.password);
     this.loginEvent.next(this.loggedIn);
   }
 
