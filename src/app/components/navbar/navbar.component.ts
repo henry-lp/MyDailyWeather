@@ -1,11 +1,11 @@
-import { Component, OnInit, Input, Output,EventEmitter} from '@angular/core';
+import { Component, OnInit, Input} from '@angular/core';
 import {NgbDropdownConfig} from '@ng-bootstrap/ng-bootstrap';
 import { FirebaseService } from '../../services/firebase.service';
 import { Observable } from 'rxjs';
 import { LoginService } from '../../services/login.service';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { FormControl } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, map,filter } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { EventInformerService } from '../../services/event-informer.service';
 import { Router, NavigationEnd } from '@angular/router';
 

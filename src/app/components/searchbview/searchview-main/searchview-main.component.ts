@@ -5,6 +5,8 @@ import { FirebaseService } from '../../../services/firebase.service';
 import { first } from 'rxjs/operators';
 import { EventInformerService } from 'src/app/services/event-informer.service';
 import { Subject } from 'rxjs';
+import { FormControl } from '@angular/forms';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'app-searchview-main',
@@ -23,11 +25,17 @@ export class SearchviewMainComponent implements OnInit {
   public locationResult:string;
   public searching:boolean = false;
   public searchSuccess:boolean;
+  public stateCtrl: FormControl = new FormControl();
 
   /* Table data */
   public weatherTableDataSetsSub:Subject<any> = new Subject();
 
-  constructor(public apiService:ApiService,private loginService:LoginService,private firebaseService:FirebaseService,private eventInformer:EventInformerService) { }
+  constructor(public apiService:ApiService,private loginService:LoginService,private firebaseService:FirebaseService,private eventInformer:EventInformerService) { 
+    this.stateCtrl.valueChanges.pipe(debounceTime(1000),distinctUntilChanged()).subscribe(val => {
+      this.searchTxt = val;
+      this.search();
+    })
+  }
 
   ngOnInit() {
   }

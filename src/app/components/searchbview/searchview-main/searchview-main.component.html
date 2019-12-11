@@ -1,6 +1,6 @@
 <div class="search-box">
-    <input class="search-txt" (keydown.enter)="search()" type="text" placeholder="Enter city/country name" [(ngModel)]="searchTxt" />
-    <button class="search-btn" (click)="search()"><i class="fa fa-search" aria-hidden="true"></i></button>
+    <input class="search-txt" [formControl]="stateCtrl" (keydown.enter)="search()" type="text" placeholder="Enter city/country name" [(ngModel)]="searchTxt" />
+    <!-- <button class="search-btn" (click)="search()"><i class="fa fa-search" aria-hidden="true"></i></button> -->
 </div>
 
 <div class="result-display color-red" *ngIf="locationResult">
