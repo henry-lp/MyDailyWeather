@@ -18,7 +18,7 @@ export class SearchviewMainComponent implements OnInit {
   public humidData:any;
   public locationName: string; //json from api
   public errorMessage:string;
-  public searchTxt: string;
+  public searchTxt: string = "";
   public prevSearchTxt: string;
   public locationResult:string;
   public searching:boolean = false;
@@ -34,8 +34,8 @@ export class SearchviewMainComponent implements OnInit {
   
   search():void {
     this.searching = false;
-    if (this.prevSearchTxt === this.searchTxt) {
-      return // no searching if it's equal to previous
+    if (this.prevSearchTxt === this.searchTxt || this.searchTxt === "") {
+      return; // no searching if it's equal to previous or not containing any string
     }
     this.prevSearchTxt = this.searchTxt;
     this.locationResult = undefined;
@@ -43,7 +43,7 @@ export class SearchviewMainComponent implements OnInit {
       this.processDataForGraph(data);},
       err => {
         this.searchSuccess = false;
-        this.locationResult = err.error.message
+        this.locationResult = err.error.message;
       }
     )
   }
