@@ -32,7 +32,7 @@ export class LoginService {
         /* Cache login */
         localStorage.setItem("myDailyWeatherUserName",this.username);
         localStorage.setItem("myDailyWeatherPassword",this.password);
-
+        
         this.loginEvent.next(this.loggedIn);
       } else {
         this.loginError = "Wrong, please double check!";
@@ -46,8 +46,8 @@ export class LoginService {
     this.loggedIn = false;
     this.password = undefined;
     this.username = undefined;
-    localStorage.setItem("myDailyWeatherUserName",this.username);
-    localStorage.setItem("myDailyWeatherPassword",this.password);
+    localStorage.removeItem("myDailyWeatherUserName");
+    localStorage.removeItem("myDailyWeatherPassword");
     this.loginEvent.next(this.loggedIn);
   }
 

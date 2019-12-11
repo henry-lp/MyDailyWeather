@@ -15,16 +15,20 @@ import { Navigation } from 'selenium-webdriver';
 
 export class AppComponent {
   private EventToChildSub: Subject<any> = new Subject();
+  private username: string;
+  private password: string;
   collection: string = "/accounts";
   constructor(private loginService:LoginService,private router: Router) {
-    this.loginInit();
+    this.username = localStorage.getItem("myDailyWeatherUserName");
+    this.password = localStorage.getItem("myDailyWeatherPassword");
+    if (this.username !== "undefined" && this.password !== "undefined") {
+      this.loginInit();
+    }
   }
 
   loginInit() {
-    var username = localStorage.getItem("myDailyWeatherUserName");
-    var password = localStorage.getItem("myDailyWeatherPassword");
-    if (username && password){
-      this.loginService.login(username,password);
+    if (this.username && this.password){
+      this.loginService.login(this.username,this.password);
     }
   }
 

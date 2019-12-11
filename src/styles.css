@@ -1,13 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
 
 body {
-    background: url('./assets/weather-background.jpg') repeat center center fixed;
+    background: url('./assets/weather-background-1.jpg') repeat fixed;
     margin: 0;
     padding: 0;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+    background-attachment: fixed;
 }
 
 html,
