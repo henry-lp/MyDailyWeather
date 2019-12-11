@@ -20,7 +20,6 @@ export class PersonalViewComponent implements OnInit {
   public loggedIn:boolean;
   public removeResult:string;
   private lineChartData:ChartDataSets[];
-
   private addedLocations:string[] = []; //index match with temp/press/himdityData - used to find index later.
 
   /* Graphs data */
@@ -95,12 +94,17 @@ export class PersonalViewComponent implements OnInit {
         var apiDataList = Object.keys(list[0].apiData); //convert from json to list
         var locNum = apiDataList.length;
         apiDataList.map(cityName => {
-          this.apiService.getLocationForecastInfo(cityName).pipe(first()).subscribe(async data => {
+          this.apiService.getLocationForecastInfo(cityName).pipe(first()).subscribe(
+            async data => {
             this.apiService.addToForecastCache(cityName,data);
             count = this.processDataForGraph(data,count,locNum); //tiny risk of data race on count, happens only if time sum of data process and api data fetch of 2 async is the same
-          })
+          },
+          err => {
+            this.message = err.error.message + ". Please wait for 1-3 min before trying again";
+          }
+          )
         })
-        this.message = "Please click on table entry to delete"
+        this.message = "Please click on table entry to delete";
         this.eventInformer.navbarAutoCompleteOptionsProvider.next(apiDataList);
       } else {
         this.message = "No data to display";

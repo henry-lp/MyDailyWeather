@@ -12,3 +12,7 @@
 .font-size-big {
     font-size: 140%;
 }
+
+.error {
+    color: black;
+}

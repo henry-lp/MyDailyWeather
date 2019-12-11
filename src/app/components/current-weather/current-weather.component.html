@@ -5,6 +5,10 @@
     <img [src]="'https://openweathermap.org/img/wn/' + obj.weather[0].icon + '@2x.png'">
 </div>
 
-<div class="spinner spinner-border text-dark" *ngIf="!obj" role="status">
+<div class="spinner spinner-border text-dark" *ngIf="displaySpinner" role="status">
     <span class="sr-only">Loading...</span>
+</div>
+
+<div class="current-weather-content error" *ngIf="errorMsg">
+    <h3><strong>{{errorMsg}}</strong></h3>
 </div>
