@@ -26,22 +26,22 @@ export class SearchviewMainComponent implements OnInit {
   public searching:boolean = false;
   public searchSuccess:boolean;
   public stateCtrl: FormControl = new FormControl();
-
   /* Table data */
   public weatherTableDataSetsSub:Subject<any> = new Subject();
 
   constructor(public apiService:ApiService,private loginService:LoginService,private firebaseService:FirebaseService,private eventInformer:EventInformerService) { 
-    this.stateCtrl.valueChanges.pipe(debounceTime(600),distinctUntilChanged()).subscribe(val => {
+    this.stateCtrl.valueChanges
+    .pipe(debounceTime(600),distinctUntilChanged()).subscribe(val => {
+      this.searching = true;
       this.searchTxt = val;
       this.search();
-    })
+    })  
   }
 
   ngOnInit() {
   }
   
   search():void {
-    this.searching = false;
     if (this.prevSearchTxt === this.searchTxt || this.searchTxt === "") {
       return; // no searching if it's equal to previous or not containing any string
     }
@@ -108,7 +108,7 @@ export class SearchviewMainComponent implements OnInit {
     weatherTableData.dataSets.push(weatherTableDataSet);
     this.weatherTableDataSetsSub.next(weatherTableData);
     
-    this.searching = true;
+    this.searching = false;
   }
 
   /* expect {cityName: nameVal} */

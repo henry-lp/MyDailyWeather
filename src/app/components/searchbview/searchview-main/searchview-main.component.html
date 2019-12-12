@@ -2,7 +2,8 @@
     <input class="search-txt" [formControl]="stateCtrl" (keydown.enter)="search()" type="text" placeholder="Enter city/country name" />
     <!-- <button class="search-btn" (click)="search()"><i class="fa fa-search" aria-hidden="true"></i></button> -->
 </div>
-
+<div class="spinner spinner-border text-dark" *ngIf="searching" role="status">
+</div>
 <div class="result-display color-red" *ngIf="locationResult">
     <ngb-alert *ngIf="searchSuccess" type="success" (close)="close()">{{locationResult}}</ngb-alert>
     <ngb-alert *ngIf="!searchSuccess" type="warning" (close)="close()">{{locationResult}}</ngb-alert>
