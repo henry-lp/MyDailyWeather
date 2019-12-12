@@ -31,7 +31,7 @@ export class SearchviewMainComponent implements OnInit {
   public weatherTableDataSetsSub:Subject<any> = new Subject();
 
   constructor(public apiService:ApiService,private loginService:LoginService,private firebaseService:FirebaseService,private eventInformer:EventInformerService) { 
-    this.stateCtrl.valueChanges.pipe(debounceTime(1000),distinctUntilChanged()).subscribe(val => {
+    this.stateCtrl.valueChanges.pipe(debounceTime(600),distinctUntilChanged()).subscribe(val => {
       this.searchTxt = val;
       this.search();
     })
