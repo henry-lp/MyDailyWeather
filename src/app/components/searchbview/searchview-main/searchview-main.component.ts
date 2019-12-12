@@ -52,6 +52,7 @@ export class SearchviewMainComponent implements OnInit {
       err => {
         this.searchSuccess = false;
         this.locationResult = err.error.message;
+        this.searching = false;
       }
     )
   }
