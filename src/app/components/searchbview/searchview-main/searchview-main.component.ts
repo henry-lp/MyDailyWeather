@@ -32,7 +32,6 @@ export class SearchviewMainComponent implements OnInit {
   constructor(public apiService:ApiService,private loginService:LoginService,private firebaseService:FirebaseService,private eventInformer:EventInformerService) { 
     this.stateCtrl.valueChanges
     .pipe(debounceTime(600),distinctUntilChanged()).subscribe(val => {
-      this.searching = true;
       this.searchTxt = val;
       this.search();
     })  
@@ -45,6 +44,7 @@ export class SearchviewMainComponent implements OnInit {
     if (this.prevSearchTxt === this.searchTxt || this.searchTxt === "") {
       return; // no searching if it's equal to previous or not containing any string
     }
+    this.searching = true;
     this.prevSearchTxt = this.searchTxt;
     this.locationResult = undefined;
     this.apiService.getLocationForecastInfo(this.searchTxt).pipe(first()).subscribe(data => {
