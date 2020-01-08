@@ -1,5 +1,5 @@
 <div class="search-box">
-    <input class="search-txt" [formControl]="stateCtrl" (keydown.enter)="search()" type="text" placeholder="Enter city/country name" />
+    <input class="search-txt" [formControl]="stateCtrl" (keydown.enter)="search()" type="text" placeholder="Enter a city name" />
     <!-- <button class="search-btn" (click)="search()"><i class="fa fa-search" aria-hidden="true"></i></button> -->
 </div>
 <div class="spinner spinner-border text-dark" *ngIf="searching" role="status">

@@ -1,18 +1,14 @@
+:host {
+    color: white;
+    text-shadow: 2px 2px black;
+}
+
 .current-weather-content {
-    color: #000000;
     text-align: center;
     width: 100%;
     height: 100%;
 }
 
-.weather-description {
-    color: #000000;
-}
-
 .font-size-big {
     font-size: 140%;
-}
-
-.error {
-    color: black;
 }

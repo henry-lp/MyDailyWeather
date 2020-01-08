@@ -115,6 +115,7 @@ export class SearchviewMainComponent implements OnInit {
   /* expect {cityName: nameVal} */
   /* Should be some kind of modal */
   onAddCityReq(evt:any):void {
+    this.searchSuccess = false;
     if (this.loginService.loggedIn) {
       this.firebaseService.appendUserDataToList(this.loginService.username,"apiData",evt.locationName).subscribe(res => {
           this.searchSuccess = true;
@@ -122,7 +123,6 @@ export class SearchviewMainComponent implements OnInit {
         }
       );
     } else {
-      this.searchSuccess = false;
       this.locationResult = "log in required!";
     }
   }
@@ -130,7 +130,9 @@ export class SearchviewMainComponent implements OnInit {
   onRemoveCityReq(evt:any):void {
     if (this.loginService.loggedIn) {
       this.firebaseService.removeUserDataFromList(this.loginService.username,"apiData",evt.locationName).subscribe(res => {
-        this.locationResult = "Location " + res;}
+        this.locationResult = "Location " + res;
+        this.searchSuccess = false; //update text before change to warning
+      }
       );
     } else {
       this.locationResult = "log in required!";

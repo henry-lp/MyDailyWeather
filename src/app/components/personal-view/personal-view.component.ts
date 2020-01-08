@@ -107,7 +107,7 @@ export class PersonalViewComponent implements OnInit {
         this.message = "Please click on table entry to delete";
         this.eventInformer.navbarAutoCompleteOptionsProvider.next(apiDataList);
       } else {
-        this.message = "No data to display";
+        this.message = "No data, please search and add a city";
       }
       this.doneLoading = true;
     })
@@ -185,7 +185,6 @@ export class PersonalViewComponent implements OnInit {
       this.overViewHumidGraphData.lineChartData.splice(foundIndex,1);
       /* Remove from table */
       this.weatherTableData.dataSets.splice(foundIndex,1);
-      console.log(this.weatherTableData);
       /* Update */
       this.overViewTempGraphEventSub.next(this.overViewTempGraphData);
       this.overViewPressGraphEventSub.next(this.overViewPressGraphData);

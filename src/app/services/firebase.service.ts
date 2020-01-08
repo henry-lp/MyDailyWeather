@@ -72,7 +72,7 @@ export class FirebaseService {
     const removeResult = items.snapshotChanges().pipe(first()).pipe(map(list => {
       var li = this.db.list(this.collection + "/" + list[0].key + "/apiData");
       li.remove(valToRemove);
-      return " removed!";
+      return " removed, if added before";
     }))
     return removeResult;
   } 

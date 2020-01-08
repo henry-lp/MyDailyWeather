@@ -27,6 +27,7 @@ import {environment} from '../environments/environment'
 import { CurrentWeatherComponent } from './components/current-weather/current-weather.component';
 import { DateAndTimeComponent } from './components/date-and-time/date-and-time.component';
 import { ConcatenatePipe } from './components/current-weather/concatenate.pipe';
+import { ErrorPageComponent } from './components/error-page/error-page.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { ConcatenatePipe } from './components/current-weather/concatenate.pipe';
     WeatherStatusTableComponent,
     CurrentWeatherComponent,
     DateAndTimeComponent,
-    ConcatenatePipe
+    ConcatenatePipe,
+    ErrorPageComponent
   ],
   imports: [
     BrowserModule,
